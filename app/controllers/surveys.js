@@ -20,7 +20,7 @@ const index = (req, res, next) => {
 
 const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
-    // _author: req.currentUser._id,
+    _author: req.currentUser._id,
   });
   Survey.create(survey)
     .then(survey => res.json({ survey }))
