@@ -5,8 +5,8 @@ curl --include --request POST http://localhost:3000/surveys \
  --data '{
    "survey": {
      "question": "What a good example am I?",
-     "options": "["text"]"
+     "options": ["text"]
 
-   },
+   }
 
  }'
