@@ -12,11 +12,11 @@ const index = (req, res, next) => {
     .catch(err => next(err));
 };
 
-// const show = (req, res, next) => {
-//   Survey.findById(req.params.id)
-//     .then(survey => survey ? res.json({ survey }) : next())
-//     .catch(err => next(err));
-// };
+const show = (req, res, next) => {
+  Survey.findById(req.params.id)
+    .then(survey => survey ? res.json({ survey }) : next())
+    .catch(err => next(err));
+};
 
 const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
@@ -58,7 +58,7 @@ const create = (req, res, next) => {
 
 module.exports = controller({
   index,
-  // show,
+  show,
   create,
   // update,
   // destroy,

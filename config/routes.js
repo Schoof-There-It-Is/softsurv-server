@@ -19,6 +19,7 @@ module.exports = require('lib/wiring/routes')
 
 .post('/surveys', 'surveys#create')
 .get('/surveys', 'surveys#index')
+.get('/surveys/:id', 'surveys#show')
 
 // all routes created
 ;
