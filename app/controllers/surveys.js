@@ -27,23 +27,23 @@ const create = (req, res, next) => {
     .catch(err => next(err));
 };
 
-// const update = (req, res, next) => {
-//   let search = { _id: req.params.id, _owner: req.currentUser._id };
-//   Survey.findOne(search)
-//     .then(survey => {
-//       if (!survey) {
-//         return next();
-//       }
-//
-//       delete req.body._owner;  // disallow owner reassignment.
-//       return survey.update(req.body.survey)
-//         .then(() => res.sendStatus(200));
-//     })
-//     .catch(err => next(err));
-// };
+const update = (req, res, next) => {
+  let search = { _id: req.params.id, _author: req.currentUser._id };
+  Survey.findOne(search)
+    .then(survey => {
+      if (!survey) {
+        return next();
+      }
+
+      delete req.body._author;  // disallow owner reassignment.
+      return survey.update(req.body.survey)
+        .then(() => res.sendStatus(200));
+    })
+    .catch(err => next(err));
+};
 //
 // const destroy = (req, res, next) => {
-//   let search = { _id: req.params.id, _owner: req.currentUser._id };
+//   let search = { _id: req.params.id, _author: req.currentUser._id };
 //   Survey.findOne(search)
 //     .then(survey => {
 //       if (!survey) {
@@ -60,7 +60,7 @@ module.exports = controller({
   index,
   show,
   create,
-  // update,
+  update,
   // destroy,
 }, { before: [
   { method: authenticate, except: ['index', 'show'] },
