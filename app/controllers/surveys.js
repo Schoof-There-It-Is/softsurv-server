@@ -7,7 +7,7 @@ const Survey = models.survey;
 const authenticate = require('./concerns/authenticate');
 
 const index = (req, res, next) => {
-  Survey.find()
+  Survey.find({ _author: req.currentUser._id })
     .then(surveys => res.json({ surveys }))
     .catch(err => next(err));
 };
@@ -63,5 +63,5 @@ module.exports = controller({
   update,
   destroy,
 }, { before: [
-  { method: authenticate, except: ['index', 'show'] },
+  { method: authenticate, except: ['show'] },
 ], });
