@@ -23,9 +23,12 @@ const surveySchema = new mongoose.Schema({
   toJSON: { virtuals: true },
 });
 
+// Should refactor to pull url from dotenv?
+const clientUrl = 'http://localhost:8080';
+
 // Virtual Property returns custom url for this Survey
 surveySchema.virtual('url').get(function url() {
-  return `?id=${this._id}`;
+  return `${clientUrl}/?id=${this._id}`;
 });
 
 const Survey = mongoose.model('Survey', surveySchema);
