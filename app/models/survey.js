@@ -23,9 +23,10 @@ const surveySchema = new mongoose.Schema({
   toJSON: { virtuals: true },
 });
 
-// surveySchema.virtual('length').get(function length() {
-//   return this.text.length;
-// });
+// Virtual Property returns custom url for this Survey
+surveySchema.virtual('url').get(function url() {
+  return `?id=${this._id}`;
+});
 
 const Survey = mongoose.model('Survey', surveySchema);
 
