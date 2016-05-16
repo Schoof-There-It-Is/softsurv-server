@@ -42,6 +42,21 @@ const update = (req, res, next) => {
     .catch(err => next(err));
 };
 
+const respond = (req, res, next) => {
+  let search = { _id: req.params.id };
+  Survey.findOne(search)
+    .then(survey => {
+      if (!survey) {
+        return next();
+      }
+      //let index = req.body.option;
+      //let optionsParam = "options[" + index  + "]";
+      return survey.update({ $inc : { "options.1.votes" : 1 } })
+        .then(() => res.sendStatus(200));
+    })
+    .catch(err => next(err));
+};
+
 const destroy = (req, res, next) => {
   let search = { _id: req.params.id, _author: req.currentUser._id };
   Survey.findOne(search)
@@ -61,7 +76,8 @@ module.exports = controller({
   show,
   create,
   update,
+  respond,
   destroy,
 }, { before: [
-  { method: authenticate, except: ['show'] },
+  { method: authenticate, except: ['show', 'respond'] },
 ], });
