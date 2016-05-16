@@ -1,5 +1,6 @@
 'use strict';
 
+const mongoose = require('mongoose');
 const controller = require('lib/wiring/controller');
 const models = require('app/models');
 const Survey = models.survey;
@@ -42,6 +43,25 @@ const update = (req, res, next) => {
     .catch(err => next(err));
 };
 
+const respond = (req, res, next) => {
+  let search = { _id: req.params.id };
+  Survey.findOne(search)
+    .then(survey => {
+      if (!survey) {
+        return next();
+      }
+      let option= survey.options[req.body.index];
+      option.votes += 1;
+      let updatedSurvey = survey;
+      updatedSurvey.options[req.body.index] = option;
+      return survey.update(updatedSurvey)
+        .then(() => res.sendStatus(200));
+    })
+    .catch(err => next(err));
+};
+
+
+
 const destroy = (req, res, next) => {
   let search = { _id: req.params.id, _author: req.currentUser._id };
   Survey.findOne(search)
@@ -61,7 +81,8 @@ module.exports = controller({
   show,
   create,
   update,
+  respond,
   destroy,
 }, { before: [
-  { method: authenticate, except: ['show'] },
+  { method: authenticate, except: ['show', 'respond'] },
 ], });

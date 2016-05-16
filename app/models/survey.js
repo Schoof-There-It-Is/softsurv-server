@@ -2,6 +2,11 @@
 
 const mongoose = require('mongoose');
 
+const optionSchema = new mongoose.Schema({
+  text: String,
+  votes: Number
+});
+
 const surveySchema = new mongoose.Schema({
 
   question: {
@@ -10,7 +15,7 @@ const surveySchema = new mongoose.Schema({
   },
   options: {
     required:true,
-    type: [mongoose.Schema.Types.Mixed],
+    type: [optionSchema],
   },
 
   _author: {
