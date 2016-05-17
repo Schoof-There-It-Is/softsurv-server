@@ -50,10 +50,10 @@ const respond = (req, res, next) => {
       if (!survey) {
         return next();
       }
-      let option= survey.options[req.body.index];
-      option.votes += 1;
-      let updatedSurvey = survey;
-      updatedSurvey.options[req.body.index] = option;
+      let responseOptions = survey.options;
+      responseOptions[req.body.index].votes += 1;
+      let updatedSurvey = { "survey": {} };
+      updatedSurvey.options = responseOptions;
       return survey.update(updatedSurvey)
         .then(() => res.sendStatus(200));
     })
