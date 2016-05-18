@@ -1,10 +1,10 @@
 #!/bin/sh
-curl --include --request POST http://localhost:3000/surveys \
+curl --request POST http://localhost:3000/surveys \
  --header "Content-Type: application/json" \
  --header "Authorization: Token token=$TOKEN" \
  --data '{
    "survey": {
-     "question": "What a good example am I?",
+     "question": "Test Survey 2",
      "options": [
      {
        "text": "question text",
@@ -12,18 +12,16 @@ curl --include --request POST http://localhost:3000/surveys \
      },
      {
        "text": "question text1",
-       "votes": 1
-     },
-     {
-       "text": "question text2",
        "votes": 2
      },
      {
+       "text": "question text2",
+       "votes": 5
+     },
+     {
        "text": "question text3",
-       "votes": 3
+       "votes": 1
      }
     ]
-
    }
-
  }'
