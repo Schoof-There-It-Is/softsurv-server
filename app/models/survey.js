@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const optionSchema = new mongoose.Schema({
   text: String,
   votes: Number
+}, {
+  toJSON: { virtuals: true },
 });
 
 const surveySchema = new mongoose.Schema({
@@ -30,10 +32,27 @@ const surveySchema = new mongoose.Schema({
 
 // Should refactor to pull url from dotenv?
 const clientUrl = 'http://schoof-there-it-is.github.io/softsurv';
-
+// const clientUrl = 'http://localhost:8080';
 // Virtual Property returns custom url for this Survey
 surveySchema.virtual('url').get(function url() {
   return `${clientUrl}/?id=${this._id}`;
+});
+
+// Virtual Property returns total number votes for a Survey
+surveySchema.virtual('totalVotes').get(function totalVotes() {
+  return this.options.reduce((prev, curr) => {
+    return prev + curr.votes;
+  }, 0);
+});
+
+// Virtual Property returns custom url for this Survey
+optionSchema.virtual('percent').get(function percent() {
+  let proportion = this.votes / this.ownerDocument().totalVotes;
+  if(isNaN(proportion.toFixed(4) * 100)) {
+      return "0%";
+    }else{
+      return `${proportion.toFixed(4) * 100}%`;
+    }
 });
 
 const Survey = mongoose.model('Survey', surveySchema);

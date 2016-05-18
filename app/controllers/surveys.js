@@ -54,6 +54,14 @@ const respond = (req, res, next) => {
       responseOptions[req.body.index].votes += 1;
       let updatedSurvey = { "survey": {} };
       updatedSurvey.options = responseOptions;
+      updatedSurvey.options.sort(function (a,b) {
+        if (a.votes < b.votes){
+          return 1;
+        }else if (a.votes > b.votes){
+          return -1;
+        }
+        return 0;
+      });
       return survey.update(updatedSurvey)
         .then(() => res.sendStatus(200));
     })
