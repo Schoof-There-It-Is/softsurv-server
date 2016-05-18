@@ -48,7 +48,11 @@ surveySchema.virtual('totalVotes').get(function totalVotes() {
 // Virtual Property returns custom url for this Survey
 optionSchema.virtual('percent').get(function percent() {
   let proportion = this.votes / this.ownerDocument().totalVotes;
-  return `${proportion.toFixed(4) * 100}%`;
+  if(isNaN(proportion.toFixed(4) * 100)) {
+      return "0%";
+    }else{
+      return `${proportion.toFixed(4) * 100}%`;
+    }
 });
 
 const Survey = mongoose.model('Survey', surveySchema);
