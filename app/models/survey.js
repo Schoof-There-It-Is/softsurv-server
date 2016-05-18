@@ -30,7 +30,7 @@ const surveySchema = new mongoose.Schema({
 
 // Should refactor to pull url from dotenv?
 const clientUrl = 'http://schoof-there-it-is.github.io/softsurv';
-
+// const clientUrl = 'http://localhost:8080';
 // Virtual Property returns custom url for this Survey
 surveySchema.virtual('url').get(function url() {
   return `${clientUrl}/?id=${this._id}`;
