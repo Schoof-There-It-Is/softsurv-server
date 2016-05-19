@@ -95,8 +95,8 @@ by 1.
 
 ## Links
 
-Deployed Application: < Link to Deployed App >
+Deployed Application: <http://schoof-there-it-is.github.io/softsurv/#>
 
-Deployed API: < Link to Deployed API >
+Deployed API: <https://softsurv-server.herokuapp.com/>
 
 Front-End Repository: <https://github.com/Schoof-There-It-Is/softsurv-client>
